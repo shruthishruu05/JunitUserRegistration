@@ -3,8 +3,6 @@ package com.bridgelabz.junituserregistration;
 public class UserValidation {
 	public boolean validateName(String name) 
 	{
-		
-
 		String nameRegex = "^[A-Z]{1}[a-z]{2,}$";
 		return name.matches(nameRegex);
 	}
@@ -25,6 +23,4 @@ public class UserValidation {
 		String passwordRegex = "^(?=.*[A-Z])(?=.*[0-9])(?=.{8,}$)[a-zA-Z0-9]*[@#$%^&-+=()][a-zA-Z0-9]*$";
 		return password.matches(passwordRegex);
 	}
-	
-
 }
