@@ -1,7 +1,8 @@
 package com.bridgelabz.junituserregistration;
 import org.junit.Assert ;
 import org.junit.Test;
-public class UserValidationTest {
+public class UserValidationTest 
+{
 	@Test
 	public void givenFirstName_WhenProper_ShouldReturnTrue() {
 		
