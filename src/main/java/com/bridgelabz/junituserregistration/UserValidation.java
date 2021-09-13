@@ -1,64 +1,56 @@
 package com.bridgelabz.junituserregistration;
-
+import com.bridgelabz.junituserregistration.ExceptionUserValidation.ExceptionType;
+@FunctionalInterface
+interface UserValidationIF {
+	public boolean validate(String n) throws ExceptionUserValidation;
+}
 public class UserValidation {
-	public boolean validateName(String name) throws ExceptionUserValidation {
-
-		try {
-			if (name.length() == 0) {
-				throw new ExceptionUserValidation("Enter Valid Name, the name entered is empty!!.");
-			}
-			String nameExpression = "^[A-Z]{1}[a-z]{2,}$";
-			return name.matches(nameExpression);
-			
-		} 
-		catch (NullPointerException e) {
-			throw new ExceptionUserValidation("Enter Valid Name, the name entered is null!!.");
+		UserValidationIF validateName = name -> {
+		try 
+		{
+		String nameRegex = "^[A-Z]{1}[a-z]{1,}";
+		return name.matches(nameRegex);
 		}
-	}
+		catch (NullPointerException e)
+		{
+			throw new ExceptionUserValidation(ExceptionType.ENTERED_NULL,"ENTER A NAME");
+		}
+		};
 	
+		
+		UserValidationIF validateEmailID = email -> {
+		try 
+		{
 
-	public boolean validateEmail(String email) throws ExceptionUserValidation {
-
-		try {
-			if (email.length() == 0) {
-				throw new ExceptionUserValidation("Please Enter Valid Email Address as it is empty");
-			}
-			String emailExpression = "^[a-zA-Z]+[a-zA-Z0-9]*[- . + _]?[a-zA-Z0-9]+[@]{1}[a-z0-9]+[.]{1}[a-z]+[.]?[a-z]+$";
-			return email.matches(emailExpression);
-		} 
-		catch (NullPointerException e) {
-			throw new ExceptionUserValidation("Please Enter Valid Email Address as it is null");
-
+		String emailRegex = "^[a-zA-z]+[a-zA-Z0-9]*[- . + _]?[a-zA-Z0-9]+[@]{1}[a-z0-9]+[\\.][a-z]{2,}(\\\\.[a-z]+)?";
+		return email.matches(emailRegex);
 		}
-	}
-
-	public boolean validateMobileNumber(String mobileNumber) throws ExceptionUserValidation {
-
-		try {
-			if (mobileNumber.length() == 0) {
-				throw new ExceptionUserValidation("Please Enter Valid Mobile Number as it is empty");			
-			}
-			String mobileNumberExpression = "^[0-9]{1,2}\\s{1}[0-9]{10}$";
-			return mobileNumber.matches(mobileNumberExpression);
-		} 
-		catch (NullPointerException e) {
-			throw new ExceptionUserValidation("Please Enter Valid Mobile Number as it is null");
+		catch(NullPointerException e) {
+			throw new ExceptionUserValidation(ExceptionType.ENTERED_NULL,"ENTER A EMAIL ID");
 		}
-	}
-
-	public boolean validatePassword(String password) throws ExceptionUserValidation {
-
-		try {
-			if (password.length() == 0) {
-				throw new ExceptionUserValidation("Please Enter Valid Password ,the password entered is empty ");
-			}
-			String passwordExpression = "^(?=.*[A-Z])(?=.*[0-9])(?=.{8,}$)[a-zA-Z0-9]*[@#$%^&-+=()][a-zA-Z0-9]*$";
-			return password.matches(passwordExpression);
-
-		} catch (NullPointerException e) {
-			throw new ExceptionUserValidation("Please Enter Valid Password, the password entered is null.");
-		}	
-	}
+	};
 	
+	UserValidationIF validateMobileNumber = mobileNumber -> {
+		try
+		{
 
+		String mobileNumberRegex = "[0-9]{1,2}\\s{1}[0-9]{10}$";
+		return mobileNumber.matches(mobileNumberRegex);
+		}
+		catch (NullPointerException e)
+		{
+			throw new ExceptionUserValidation(ExceptionType.ENTERED_NULL,"ENTER A MOBILE NUMBER");
+		}
+	};
+	UserValidationIF validatePassword = password -> {
+		try 
+		{
+		String passwordRegex = "(?=.*[@#$%^&-+=()])(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9].{8,}";
+		return password.matches(passwordRegex);
+		}
+		catch (NullPointerException e)
+		{
+			throw new ExceptionUserValidation(ExceptionType.ENTERED_NULL,"ENTER A PASSWORD");
+		}
+	};
 }
