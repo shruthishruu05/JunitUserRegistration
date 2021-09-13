@@ -11,40 +11,38 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class ParameterisedUserRegistrationTest {
 
-	public String email;
-	public boolean expectedResult;
+	public String testEmail;
+	public boolean result;
 	public UserValidation userValidator;
 
-	public ParameterisedUserRegistrationTest(String testEmail, boolean expectedResult) {
+	public ParameterisedUserRegistrationTest(String testEmail, boolean result) {
 
-		this.email = testEmail;
-		this.expectedResult = expectedResult;
+		this.testEmail = testEmail;
+		this.result = result;
 	}
 
 	@Before
 	public void initialize() {
 		userValidator = new UserValidation();
 	}
-
-	@Test
-	public void givenEmailAddress_ShouldReturnAsExpected() throws ExceptionUserValidation{
-		boolean testResult = userValidator.validateEmail(email);
-		Assert.assertEquals(testResult, expectedResult);
-	}
-
 	@Parameterized.Parameters
 	public static Collection input() {
 
-		return Arrays.asList(new Object[][] { { "abc@bridgelabz.co.in", true }, { "abc@gmail.com.com", true },
-				{ "abc@yahoo.com", true }, { "abc@1.com", true }, { "abc-100@yahoo.com", true },
-				{ "abc.100@yahoo.com", true }, { "abc111@abc.com", true }, { "abc-100@abc.net", true },
-				{ "abc.100@abc.com.au", true }, { "abc+100@gmail.com", true },
+		return Arrays.asList(new Object[][] { {".abc@abc.com", false }, {"abc", false }, {"abc@.com.my", false }, {"abc@abc@gmail.com", false },
+				{"abc()*@gmail.com", false }, {"abc..2002@gmail.com", false }, {"abc_@gmail.com", false },
+				{"abc123@.com", false }, {"abc123@.com.com", false }, {"abc123@gmail.a", false },
+				{"abc@%*.com", false }, {"abc@gmail.com.1a", false }, {".abc@gmail.com.aa.au", false } ,
+				
+				{"abc@bridgelabz.co.in", true }, {"abc@gmail.com.com", true },
+				{"abc@yahoo.com", true }, {"abc@1.com", true }, { "abc-100@yahoo.com", true },
+				{"abc.100@yahoo.com", true }, {"abc111@abc.com", true }, {"abc-100@abc.net", true },
+				{"abc.100@abc.com.au", true }, {"abc+100@gmail.com", true }});
 
-				{ ".abc@abc.com", false }, { "abc", false }, { "abc@.com.my", false }, { "abc@abc@gmail.com", false },
-				{ "abc()*@gmail.com", false }, { "abc..2002@gmail.com", false }, { "abc.@gmail.com", false },
-				{ "abc123@.com", false }, { "abc123@.com.com", false }, { "abc123@gmail.a", false },
-				{ "abc@%*.com", false }, { "abc@gmail.com.1a", false }, { ".abc@gmail.com.aa.au", false } });
-
+	}
+	@Test
+	public void givenEmailAddress_ShouldReturnAsExpected() throws ExceptionUserValidation {
+		boolean testResult = userValidator.validateEmailID.validate(testEmail);
+		Assert.assertEquals(testResult, result);
 	}
 
 }
