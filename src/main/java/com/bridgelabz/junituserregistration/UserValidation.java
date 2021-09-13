@@ -1,7 +1,8 @@
 package com.bridgelabz.junituserregistration;
 import com.bridgelabz.junituserregistration.ExceptionUserValidation.ExceptionType;
 @FunctionalInterface
-interface UserValidationIF {
+interface UserValidationIF 
+{
 	public boolean validate(String n) throws ExceptionUserValidation;
 }
 public class UserValidation {
